@@ -88,6 +88,11 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
             fputs(newBuffer, output);
             free(newBuffer);
         }
+        else
+        {
+            free(buffer);
+            return;
+        }
     }
     free(buffer);
 }
@@ -127,6 +132,7 @@ int main(int argc, char *argv[])
     if (temp == NULL)
     {
         perror("Error: replace file could not be created\n");
+        fclose(fp);
         return 1;
     }
     processFile(fp, temp, searchWord, replaceWord);
