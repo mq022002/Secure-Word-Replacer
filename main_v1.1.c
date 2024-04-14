@@ -17,6 +17,7 @@ int isWordChar(char c)
 
 // 1-1: Buffer Overruns
 // 3-1: Failure to Handle Errors Correctly
+// 4-1: Integer Overflows
 char *replaceWordInString(const char *str, const char *searchWord, const char *replaceWord)
 {
     int searchWordLen = strlen(searchWord);
@@ -29,6 +30,20 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     {
         count++;
         tmp += searchWordLen;
+    }
+
+    int multiplication = count * diff;
+    if (multiplication < 0 || multiplication / diff != count)
+    {
+        fprintf(stderr, "Error: Integer overflow\n");
+        return NULL;
+    }
+
+    int newLength = strlen(str) + multiplication + 1;
+    if (newLength < 0)
+    {
+        fprintf(stderr, "Error: Integer overflow\n");
+        return NULL;
     }
 
     char *newStr = malloc(strlen(str) + count * diff + 1);
@@ -83,8 +98,6 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
 
 // 2-1: Format String Problems
 // 3-3: Failure to Handle Errors Correctly
-// 4-1: Information Leakage
-// 5-1: Poor Usability
 int main(int argc, char *argv[])
 {
     if (argc != 4)
