@@ -58,7 +58,8 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     {
         if (strstr(str, searchWord) == str)
         {
-            strcpy(current, replaceWord);
+            strncpy(current, replaceWord, replaceWordLen);
+            current[replaceWordLen] = '\0';
             current += replaceWordLen;
             str += searchWordLen;
         }
