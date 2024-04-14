@@ -2,21 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-int isWordChar(char c)
-{
-    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
-    {
-        return 1;
-    }
-    if (c == '-')
-    {
-        return 0;
-    }
-    return 0;
-}
-
-// 1-1: Buffer Overruns
-// 3-1: Failure to Handle Errors Correctly
 char *replaceWordInString(const char *str, const char *searchWord, const char *replaceWord)
 {
     int searchWordLen = strlen(searchWord);
@@ -25,6 +10,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
 
     int count = 0;
     const char *tmp = str;
+    const char *original_str = str;
     while ((tmp = strstr(tmp, searchWord)) != NULL)
     {
         count++;
@@ -41,7 +27,10 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     char *current = newStr;
     while (*str)
     {
-        if (strstr(str, searchWord) == str)
+        if (strstr(str, searchWord) == str &&
+        (*(str - 1) == ' ' || str == original_str) && 
+        (*(str + searchWordLen) == ' ' || *(str + searchWordLen) == '\0' ||
+         *(str + searchWordLen) == ',' || *(str + searchWordLen) == '.')) 
         {
             strcpy(current, replaceWord);
             current += replaceWordLen;
@@ -58,8 +47,6 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     return newStr;
 }
 
-// 1-2: Buffer Overruns
-// 3-2: Failure to Handle Errors Correctly
 void processFile(FILE *input, FILE *output, const char *searchWord, const char *replaceWord)
 {
     size_t bufferSize = 1024;
@@ -81,10 +68,7 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     free(buffer);
 }
 
-// 2-1: Format String Problems
-// 3-3: Failure to Handle Errors Correctly
-// 4-1: Information Leakage
-// 5-1: Poor Usability
+
 int main(int argc, char *argv[])
 {
     if (argc != 4)

@@ -2,21 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int isWordChar(char c)
-{
-    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
-    {
-        return 1;
-    }
-    if (c == '-')
-    {
-        return 0;
-    }
-    return 0;
-}
-
+// Code by MQ and MH
 // 1-1: Buffer Overruns
 // 3-1: Failure to Handle Errors Correctly
+/*
+This block of code is a helper function that replaces a word in a string with another word.
+It takes a pointer to the original string, the word to search for, and the word to replace it with.
+Upon successful replacement, it returns an updated string with the replaced word.
+*/
 char *replaceWordInString(const char *str, const char *searchWord, const char *replaceWord)
 {
     int searchWordLen = strlen(searchWord);
@@ -25,6 +18,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
 
     int count = 0;
     const char *tmp = str;
+    const char *original_str = str;
     while ((tmp = strstr(tmp, searchWord)) != NULL)
     {
         count++;
@@ -41,7 +35,10 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     char *current = newStr;
     while (*str)
     {
-        if (strstr(str, searchWord) == str)
+        if (strstr(str, searchWord) == str &&
+        (*(str - 1) == ' ' || str == original_str) && 
+        (*(str + searchWordLen) == ' ' || *(str + searchWordLen) == '\0' ||
+         *(str + searchWordLen) == ',' || *(str + searchWordLen) == '.')) 
         {
             strcpy(current, replaceWord);
             current += replaceWordLen;
@@ -58,8 +55,13 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     return newStr;
 }
 
+// Code by MQ
 // 1-2: Buffer Overruns
 // 3-2: Failure to Handle Errors Correctly
+/*
+This block of code processes a file by reading each line, and making calls to a helper function to replace the target word.
+It takes a file pointer for the input file, a file pointer for the output file, the word to search for, and the word to 
+*/
 void processFile(FILE *input, FILE *output, const char *searchWord, const char *replaceWord)
 {
     size_t bufferSize = 1024;
@@ -81,10 +83,17 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     free(buffer);
 }
 
+
+// Code by MH
 // 2-1: Format String Problems
 // 3-3: Failure to Handle Errors Correctly
 // 4-1: Information Leakage
 // 5-1: Poor Usability
+/*
+The main function takes command line arguments for the file to search, the word to search for, and the word to replace it with.
+It does some basic error checking on the input arguments, opens the input file, and creates a new file to write the modified text.
+It also provides some simple user feedback on the search and replace operation.
+*/
 int main(int argc, char *argv[])
 {
     if (argc != 4)

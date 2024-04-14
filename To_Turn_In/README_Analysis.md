@@ -1,6 +1,8 @@
 # CS 455 - Secure Software Development Course Project
+# Matthew Hammond and Matthew Quijano
 
 ## Project Description
+This is a simple program that allows the user to replace words in a text file. The user is able to enter the name of the file they wish to scan, the word they wish to replace, and what the target word is changed to. Our program uses these general steps to accomplish its task:
 1) The program starts by checking if the correct number of command-line arguments are provided.
 2) It validates the search word and replace word.
 3) It opens the input file for reading and a new file for writing.
@@ -22,12 +24,14 @@ git clone https://github.com/Abbalah19/CS455_Final_Project.git
 5) Usage for our program
     - In your Git Bash, compile our program using the following command:
     ```bash
-    gcc main_v2.c -o main
+    gcc main_analysis_version.c -o main
     ```
+
     - The following command is how we use our program. Please replace [parameters] with your specified parameters:
     ```bash
     ./main [file to search] [word to search for] [word to replace with]
     ```
+
     - Example usage:
     ```bash
     ./main test_text.txt for yummy
