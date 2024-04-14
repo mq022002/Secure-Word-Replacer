@@ -43,7 +43,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
         return NULL;
     }
 
-    char *newStr = malloc(strlen(str) + count * diff + 1);
+    char *newStr = malloc(newLength);
     if (newStr == NULL)
     {
         perror("Error allocating memory");
@@ -51,18 +51,26 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     }
 
     char *current = newStr;
+    int remainingSpace = newLength;
     while (*str)
     {
         if (strstr(str, searchWord) == str)
         {
+            if (replaceWordLen > remainingSpace)
+            {
+                perror("Not enough space in the buffer");
+                free(newStr);
+                return NULL;
+            }
             strncpy(current, replaceWord, replaceWordLen);
-            current[replaceWordLen] = '\0';
             current += replaceWordLen;
+            remainingSpace -= replaceWordLen;
             str += searchWordLen;
         }
         else
         {
             *current++ = *str++;
+            remainingSpace--;
         }
     }
 
