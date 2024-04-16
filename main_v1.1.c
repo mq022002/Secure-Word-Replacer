@@ -46,7 +46,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     char *newStr = malloc(newLength);
     if (newStr == NULL)
     {
-        perror("Error allocating memory");
+        printf("Error allocating memory");
         return NULL;
     }
 
@@ -58,7 +58,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
         {
             if (replaceWordLen > remainingSpace)
             {
-                perror("Not enough space in the buffer");
+                printf("Not enough space in the buffer");
                 free(newStr);
                 return NULL;
             }
@@ -85,7 +85,7 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     char *buffer = malloc(bufferSize * sizeof(char));
     if (buffer == NULL)
     {
-        perror("Error: memory allocation failed\n");
+        printf("Error: memory allocation failed\n");
         exit(1);
     }
     while (fgets(buffer, bufferSize, input) != NULL)
@@ -133,13 +133,13 @@ int main(int argc, char *argv[])
     FILE *fp = fopen(file, "r");
     if (fp == NULL)
     {
-        perror("Error opening file");
+        printf("Error opening file");
         return 1;
     }
     FILE *temp = fopen("modifiedText.txt", "w");
     if (temp == NULL)
     {
-        perror("Error: replace file could not be created\n");
+        printf("Error: replace file could not be created\n");
         fclose(fp);
         return 1;
     }
