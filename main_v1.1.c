@@ -105,17 +105,20 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     free(buffer);
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    if (argc != 4)
-    {
-        printf("command takes 3 arguments. [file to search] [word to search for] [word to replace with]\n");
-        return 1;
-    }
+    char file[100];
+    char searchWord[50];
+    char replaceWord[50];
 
-    char *file = argv[1];
-    char *searchWord = argv[2];
-    char *replaceWord = argv[3];
+    printf("Enter the file name: ");
+    scanf("%99s", file);
+
+    printf("Enter the search word: ");
+    scanf("%49s", searchWord);
+
+    printf("Enter the replace word: ");
+    scanf("%49s", replaceWord);
 
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
@@ -125,7 +128,7 @@ int main(int argc, char *argv[])
 
     if (strlen(searchWord) >= 50 || strlen(replaceWord) >= 50)
     {
-        printf("Error: search word and replace word can not be longer than 99 characters\n");
+        printf("Error: search word and replace word can not be longer than 49 characters\n");
         return 1;
     }
 
