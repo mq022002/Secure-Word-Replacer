@@ -113,13 +113,27 @@ int main()
     char replaceWord[50];
 
     printf("Enter the file name: ");
-    scanf("%99s", file);
+    if (fgets(file, sizeof(file), stdin) == NULL || strlen(file) == 0 || file[strlen(file) - 1] != '\n')
+    {
+        printf("Error: file name must not be empty and can not be longer than 99 characters\n");
+        return 1;
+    }
+    file[strlen(file) - 1] = '\0';
 
     printf("Enter the search word: ");
-    scanf("%49s", searchWord);
+    if (fgets(searchWord, sizeof(searchWord), stdin) == NULL || strlen(searchWord) == 0 || searchWord[strlen(searchWord) - 1] != '\n')
+    {
+        printf("Error: search word must not be empty and can not be longer than 49 characters\n");
+        return 1;
+    }
 
     printf("Enter the replace word: ");
-    scanf("%49s", replaceWord);
+    if (fgets(replaceWord, sizeof(replaceWord), stdin) == NULL || strlen(replaceWord) == 0 || replaceWord[strlen(replaceWord) - 1] != '\n')
+    {
+        printf("Error: replace word must not be empty and can not be longer than 49 characters\n");
+        return 1;
+    }
+    replaceWord[strlen(replaceWord) - 1] = '\0';
 
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
