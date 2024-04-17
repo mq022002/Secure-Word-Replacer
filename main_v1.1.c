@@ -129,15 +129,31 @@ int main(int argc, char *argv[])
 {
     // 9. Poor Usability
     // The code checks if the correct number of arguments were provided.
-    if (argc != 4)
+    if (argc != 5)
     {
-        printf("command takes 3 arguments. [file to search] [word to search for] [word to replace with]\n");
+        printf("command takes 4 arguments. [file to search] [word to search for] [word to replace with] [output file]\n");
         return 1;
     }
 
     char *file = argv[1];
     char *searchWord = argv[2];
     char *replaceWord = argv[3];
+    char *outputFile = argv[4];
+
+    // 12. Failure to Protect Stored Data
+    // The code checks if the output file already exists
+    if (fileExists(outputFile))
+    {
+        char response[4];
+        printf("The file %s already exists. Do you want to overwrite it? (yes/no): ", outputFile);
+        fgets(response, sizeof(response), stdin);
+        response[strcspn(response, "\n")] = 0;
+        if (strcmp(response, "yes") != 0)
+        {
+            printf("Aborted by user.\n");
+            return 1;
+        }
+    }
 
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
@@ -163,7 +179,7 @@ int main(int argc, char *argv[])
         printf("Error opening file");
         return 1;
     }
-    FILE *temp = fopen("modifiedText.txt", "w");
+    FILE *temp = fopen(outputFile, "w");
     if (temp == NULL)
     {
         printf("Error: replace file could not be created\n");
