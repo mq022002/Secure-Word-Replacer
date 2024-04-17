@@ -24,11 +24,31 @@ git clone https://github.com/Abbalah19/CS455_Final_Project.git
     ```bash
     gcc main_v2.c -o main
     ```
-    - The following command is how we use our program. Please replace [parameters] with your specified parameters:
+    - The following command is how we use our program. Please replace values in `[]` with your specified user input parameters:
     ```bash
-    ./main [file to search] [word to search for] [word to replace with]
+    ./main
     ```
-    - Example usage:
+    After running that command, you should get the following statements requesting user input:
     ```bash
-    ./main test_text.txt for yummy
+    Enter the file name: [file to search]
     ```
+    ```bash
+    Enter the search word: [word to search for]
+    ```
+    ```bash
+    Enter the replace word: [word to replace with]
+    ```
+## Example usage:
+```bash
+./main
+```
+After running that command...
+```bash
+Enter the file name: text.txt
+```
+```bash
+Enter the search word: in
+```
+```bash
+Enter the replace word: yummy
+```
