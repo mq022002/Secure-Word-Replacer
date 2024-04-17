@@ -87,7 +87,7 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     if (buffer == NULL)
     {
         printf("Error: memory allocation failed\n");
-        return;
+        exit(1);
     }
     while (fgets(buffer, bufferSize, input) != NULL)
     {
@@ -106,31 +106,17 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     free(buffer);
 }
 
-int getUserInput(char *file, int fileLen, char *searchWord, int searchWordLen, char *replaceWord, int replaceWordLen)
+int main(int argc, char *argv[])
 {
-    printf("Enter the file name: ");
-    if (fgets(file, fileLen, stdin) == NULL || strlen(file) == 0 || file[strlen(file) - 1] != '\n')
+    if (argc != 4)
     {
-        printf("Error: file name must not be empty and can not be longer than 99 characters\n");
+        printf("command takes 3 arguments. [file to search] [word to search for] [word to replace with]\n");
         return 1;
     }
-    file[strlen(file) - 1] = '\0';
 
-    printf("Enter the search word: ");
-    if (fgets(searchWord, searchWordLen, stdin) == NULL || strlen(searchWord) == 0 || searchWord[strlen(searchWord) - 1] != '\n')
-    {
-        printf("Error: search word must not be empty and can not be longer than 49 characters\n");
-        return 1;
-    }
-    searchWord[strlen(searchWord) - 1] = '\0';
-
-    printf("Enter the replace word: ");
-    if (fgets(replaceWord, replaceWordLen, stdin) == NULL || strlen(replaceWord) == 0 || replaceWord[strlen(replaceWord) - 1] != '\n')
-    {
-        printf("Error: replace word must not be empty and can not be longer than 49 characters\n");
-        return 1;
-    }
-    replaceWord[strlen(replaceWord) - 1] = '\0';
+    char *file = argv[1];
+    char *searchWord = argv[2];
+    char *replaceWord = argv[3];
 
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
@@ -138,11 +124,12 @@ int getUserInput(char *file, int fileLen, char *searchWord, int searchWordLen, c
         return 1;
     }
 
-    return 0;
-}
+    if (strlen(searchWord) >= 50 || strlen(replaceWord) >= 50)
+    {
+        printf("Error: search word and replace word can not be longer than 99 characters\n");
+        return 1;
+    }
 
-int processUserInput(const char *file, const char *searchWord, const char *replaceWord)
-{
     printf("Searching for '%s' and replacing with '%s' in file '%s'\n", searchWord, replaceWord, file);
     FILE *fp = fopen(file, "r");
     if (fp == NULL)
@@ -161,25 +148,6 @@ int processUserInput(const char *file, const char *searchWord, const char *repla
 
     fclose(fp);
     fclose(temp);
-
-    return 0;
-}
-
-int main()
-{
-    char file[100];
-    char searchWord[50];
-    char replaceWord[50];
-
-    if (getUserInput(file, sizeof(file), searchWord, sizeof(searchWord), replaceWord, sizeof(replaceWord)) != 0)
-    {
-        return 1;
-    }
-
-    if (processUserInput(file, searchWord, replaceWord) != 0)
-    {
-        return 1;
-    }
 
     return 0;
 }
