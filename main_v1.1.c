@@ -91,6 +91,12 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     }
     while (fgets(buffer, bufferSize, input) != NULL)
     {
+        if (strlen(buffer) >= bufferSize)
+        {
+            printf("Error: Buffer overflow\n");
+            free(buffer);
+            return;
+        }
         char *newBuffer = replaceWordInString(buffer, searchWord, replaceWord);
         if (newBuffer != NULL)
         {
