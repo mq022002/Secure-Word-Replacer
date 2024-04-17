@@ -3,19 +3,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-int isWordChar(char c)
-{
-    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
-    {
-        return 1;
-    }
-    if (c == '-')
-    {
-        return 0;
-    }
-    return 0;
-}
-
 int fileExists(const char *filename)
 {
     struct _stat buffer;
