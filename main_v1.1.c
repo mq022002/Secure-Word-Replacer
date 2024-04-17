@@ -30,7 +30,8 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     }
 
     int multiplication = count * diff;
-    if (multiplication < 0 || multiplication / diff != count)
+    if ((diff > 0 && (multiplication < 0 || multiplication / diff != count)) ||
+        (diff < 0 && multiplication > 0))
     {
         fprintf(stderr, "Error: Integer overflow\n");
         return NULL;
