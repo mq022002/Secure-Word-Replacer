@@ -4,14 +4,24 @@
 #include <sys/stat.h>
 
 // Author: MQ
-// This function checks if a file exists.
+/**
+ * @brief This function checks if a file exists.
+ * @param filename The name of the file to check.
+ * @return 1 if the file exists, 0 otherwise.
+ */
 int fileExists(const char *filename)
 {
     struct _stat buffer;
     return (_stat(filename, &buffer) == 0);
 }
 
-// This function replaces a word in a string with another word.
+/**
+ * @brief This function replaces a word in a string with another word.
+ * @param str The original string.
+ * @param searchWord The word to be replaced.
+ * @param replaceWord The word to replace the search word.
+ * @return A new string with the word replaced, or NULL if an error occurs.
+ */
 char *replaceWordInString(const char *str, const char *searchWord, const char *replaceWord)
 {
     int searchWordLen = strlen(searchWord);
@@ -86,7 +96,13 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     return newStr;
 }
 
-// This function processes a file, replacing a word with another word.
+/**
+ * @brief This function processes a file, replacing a word with another word.
+ * @param input The input file pointer.
+ * @param output The output file pointer.
+ * @param searchWord The word to search for in the file.
+ * @param replaceWord The word to replace the search word with.
+ */
 void processFile(FILE *input, FILE *output, const char *searchWord, const char *replaceWord)
 {
     size_t bufferSize = 1024;
@@ -123,7 +139,12 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     free(buffer);
 }
 
-// This is the main function that processes the command line arguments and calls the processFile function.
+/**
+ * @brief This is the main function that processes the command line arguments and calls the processFile function.
+ * @param argc The number of command line arguments.
+ * @param argv The command line arguments.
+ * @return 0 if successful, 1 otherwise.
+ */
 int main(int argc, char *argv[])
 {
     // Author: MH, MQ
