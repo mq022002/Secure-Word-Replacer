@@ -31,5 +31,5 @@ git clone https://github.com/Abbalah19/CS455_Final_Project.git
     ```
     - Example usage:
     ```bash
-    ./main test_text.txt for yummy output.txt
+    ./main text.txt for yummy output.txt
     ```
