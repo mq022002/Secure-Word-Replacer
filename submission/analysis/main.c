@@ -181,13 +181,13 @@ int main(int argc, char *argv[])
     FILE *fp = fopen(file, "r");
     if (fp == NULL)
     {
-        printf("Error opening file");
+        printf("Error: Unable to open the input file\n");
         return 1;
     }
     FILE *temp = fopen(outputFile, "w");
     if (temp == NULL)
     {
-        printf("Error: replace file could not be created\n");
+        printf("Error: Unable to create the output file\n");
         fclose(fp);
         return 1;
     }
