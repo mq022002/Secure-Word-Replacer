@@ -55,6 +55,8 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     {
         if (strstr(str, searchWord) == str)
         {
+            // 1. Buffer Overruns
+            // The code checks if there is enough space in the buffer before copying the replacement word
             if (replaceWordLen > remainingSpace)
             {
                 printf("Not enough space in the buffer");
@@ -90,6 +92,7 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     while (fgets(buffer, bufferSize, input) != NULL)
     {
         // 1. Buffer Overruns
+        // 6. Failure to Handle Errors Correctly
         // The code checks if the buffer size is exceeded when reading from the file.
         if (strlen(buffer) >= bufferSize)
         {
@@ -127,6 +130,7 @@ int main(int argc, char *argv[])
     char *replaceWord = argv[3];
     char *outputFile = argv[4];
 
+    // 9. Poor Usability
     // 12. Failure to Protect Stored Data
     // The code checks if the output file already exists
     if (fileExists(outputFile))
@@ -142,12 +146,17 @@ int main(int argc, char *argv[])
         }
     }
 
+    // 9. Poor Usability
+    // The code checks if the search word and replace word are not empty
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
         printf("Error: search word and replace word must not be empty\n");
         return 1;
     }
 
+    // 1. Buffer Overruns
+    // 9. Poor Usability
+    // The code checks if the search word and replace word are not too long
     if (strlen(searchWord) >= 50 || strlen(replaceWord) >= 50)
     {
         printf("Error: search word and replace word can not be longer than 99 characters\n");
@@ -166,6 +175,9 @@ int main(int argc, char *argv[])
         printf("Error opening file");
         return 1;
     }
+
+    // 6. Failure to Handle Errors Correctly
+    // The code checks if the replace file was created successfully.
     FILE *temp = fopen(outputFile, "w");
     if (temp == NULL)
     {
