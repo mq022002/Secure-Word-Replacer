@@ -164,12 +164,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    if (strlen(searchWord) >= 70 || strlen(replaceWord) >= 70)
-    {
-        printf("Error: search word and replace word can not be longer than 69 characters\n");
-        return 1;
-    }
-
     if (strcmp(searchWord, replaceWord) == 0)
     {
         printf("Error: search word and replace word must not be the same\n");
