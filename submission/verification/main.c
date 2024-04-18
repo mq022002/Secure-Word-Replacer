@@ -207,7 +207,9 @@ int main(int argc, char *argv[])
         }
     }
 
+    // Author: MQ
     // 9-3: Poor Usability
+    // The code checks if the input and output files are .txt files
     if (!isTxtFile(file) || !isTxtFile(outputFile))
     {
         printf("Error: Only .txt files are supported\n");
