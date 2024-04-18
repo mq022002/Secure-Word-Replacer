@@ -3,6 +3,17 @@
 #include <string.h>
 #include <sys/stat.h>
 
+void toLowerCase(char *str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            str[i] = str[i] + 'a' - 'A';
+        }
+    }
+}
+
 int fileExists(const char *filename)
 {
     struct _stat buffer;
@@ -130,10 +141,11 @@ int main(int argc, char *argv[])
     if (fileExists(outputFile))
     {
         char response[4];
-        printf("The file %s already exists. Do you want to overwrite it? (yes/no): ", outputFile);
+        printf("The file %s already exists. Do you want to overwrite it? (yes/no or y/n): ", outputFile);
         fgets(response, sizeof(response), stdin);
         response[strcspn(response, "\n")] = 0;
-        if (strcmp(response, "yes") != 0)
+        toLowerCase(response);
+        if (strcmp(response, "yes") != 0 && strcmp(response, "y") != 0)
         {
             printf("Aborted by user.\n");
             return 1;

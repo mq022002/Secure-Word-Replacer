@@ -11,6 +11,23 @@
 #include <sys/stat.h>
 
 /**
+ * @brief This function converts a string to lowercase.
+ * @param str The string to convert.
+ * @side_effects Modifies the input string in-place.
+ * @author MQ
+ */
+void toLowerCase(char *str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            str[i] = str[i] + 'a' - 'A';
+        }
+    }
+}
+
+/**
  * @brief This function checks if a file exists.
  * @param filename The name of the file to check.
  * @return 1 if the file exists, 0 otherwise.
@@ -197,10 +214,11 @@ int main(int argc, char *argv[])
     if (fileExists(outputFile))
     {
         char response[4];
-        printf("The file %s already exists. Do you want to overwrite it? (yes/no): ", outputFile);
+        printf("The file %s already exists. Do you want to overwrite it? (yes/no or y/n): ", outputFile);
         fgets(response, sizeof(response), stdin);
         response[strcspn(response, "\n")] = 0;
-        if (strcmp(response, "yes") != 0)
+        toLowerCase(response);
+        if (strcmp(response, "yes") != 0 && strcmp(response, "y") != 0)
         {
             printf("Aborted by user.\n");
             return 1;
