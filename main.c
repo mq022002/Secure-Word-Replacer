@@ -9,6 +9,14 @@ int fileExists(const char *filename)
     return (_stat(filename, &buffer) == 0);
 }
 
+int isTxtFile(const char *filename)
+{
+    const char *dot = strrchr(filename, '.');
+    if (!dot || dot == filename)
+        return 0;
+    return strcmp(dot, ".txt") == 0;
+}
+
 char *replaceWordInString(const char *str, const char *searchWord, const char *replaceWord)
 {
     int searchWordLen = strlen(searchWord);
@@ -130,6 +138,12 @@ int main(int argc, char *argv[])
             printf("Aborted by user.\n");
             return 1;
         }
+    }
+
+    if (!isTxtFile(file) || !isTxtFile(outputFile))
+    {
+        printf("Error: Only .txt files are supported\n");
+        return 1;
     }
 
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)

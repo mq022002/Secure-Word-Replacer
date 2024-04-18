@@ -24,6 +24,21 @@ int fileExists(const char *filename)
 }
 
 /**
+ * @brief This function checks if a filename ends with ".txt".
+ * @param filename The name of the file to check.
+ * @return 1 if the file is a .txt file, 0 otherwise.
+ * @side_effects No side effects.
+ * @author MQ
+ */
+int isTxtFile(const char *filename)
+{
+    const char *dot = strrchr(filename, '.');
+    if (!dot || dot == filename)
+        return 0;
+    return strcmp(dot, ".txt") == 0;
+}
+
+/**
  * @brief This function replaces a word in a string with another word.
  * @param str The original string.
  * @param searchWord The word to be replaced.
@@ -192,8 +207,15 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Author: MH
     // 9-3: Poor Usability
+    if (!isTxtFile(file) || !isTxtFile(outputFile))
+    {
+        printf("Error: Only .txt files are supported\n");
+        return 1;
+    }
+
+    // Author: MH
+    // 9-4: Poor Usability
     // The code checks if the search word and replace word are not empty
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
@@ -203,7 +225,7 @@ int main(int argc, char *argv[])
 
     // Author: MQ
     // 1-3: Buffer Overruns
-    // 9-4: Poor Usability
+    // 9-5: Poor Usability
     // The code checks if the search word and replace word are not too long
     if (strlen(searchWord) >= 70 || strlen(replaceWord) >= 70)
     {
