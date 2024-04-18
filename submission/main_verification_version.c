@@ -1,3 +1,10 @@
+/*
+ * File: main_verification_version.c
+ * Authors: MH, MQ
+ * Description: This file contains the implementation of a program that replaces a word in a file with another word.
+ * Each function in this file has been annotated with the author(s) who implemented it.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
