@@ -253,6 +253,15 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    // Author: MQ
+    // 9-6: Poor Usability
+    // The code checks if the search word and replace word are the same
+    if (strcmp(searchWord, replaceWord) == 0)
+    {
+        printf("Error: search word and replace word must not be the same\n");
+        return 1;
+    }
+
     // Author: MH
     // 2-1: Format String Problems
     // The code uses a controlled format string to print the search and replace words.

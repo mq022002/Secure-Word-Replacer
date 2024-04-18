@@ -170,6 +170,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    if (strcmp(searchWord, replaceWord) == 0)
+    {
+        printf("Error: search word and replace word must not be the same\n");
+        return 1;
+    }
+
     printf("Searching for '%s' and replacing with '%s' in file '%s'\n", searchWord, replaceWord, file);
 
     FILE *fp = fopen(file, "r");
