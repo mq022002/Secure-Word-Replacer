@@ -23,7 +23,7 @@ git clone https://github.com/Abbalah19/CS455_Final_Project.git
 5) Usage for our program
     - In your Git Bash, compile our program using the following command:
     ```bash
-    gcc main_analysis_version.c -o main
+    gcc main.c -o main
     ```
     - The following command is how we use our program. Please replace [parameters] with your specified parameters:
     ```bash
