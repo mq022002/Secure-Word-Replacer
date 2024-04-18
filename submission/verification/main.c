@@ -81,7 +81,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
     int multiplication = count * diff;
     // Author: MQ
     // 3-1: Integer Overflows
-    // The code checks for integer overflow when calculating the new length of the string after replacement.
+    // This code checks for integer overflow when calculating the new length of the string after replacement.
     if ((diff > 0 && (multiplication < 0 || multiplication / diff != count)) ||
         (diff < 0 && multiplication > 0))
     {
@@ -98,7 +98,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
 
     // Author: MH
     // 6-1: Failure to Handle Errors Correctly
-    // The code checks if memory allocation was successful when creating a new string.
+    // This code checks if memory allocation was successful when creating a new string.
     char *newStr = malloc(newLength);
     if (newStr == NULL)
     {
@@ -114,7 +114,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
         {
             // Author: MH
             // 1-1: Buffer Overruns
-            // The code checks if there is enough space in the buffer before copying the replacement word
+            // This code checks if there is enough space in the buffer before copying the replacement word
             if (replaceWordLen > remainingSpace)
             {
                 printf("Not enough space in the buffer");
@@ -161,12 +161,18 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
         // Author: MH
         // 1-2: Buffer Overruns
         // 6-2: Failure to Handle Errors Correctly
-        // The code checks if the buffer size is exceeded when reading from the file.
-        if (strlen(buffer) >= bufferSize)
+        // This code changes the buffer size if the line is longer than the buffer size.
+        while (strchr(buffer, '\n') == NULL)
         {
-            printf("Error: Buffer overflow\n");
-            free(buffer);
-            return;
+            bufferSize *= 2;
+            buffer = realloc(buffer, bufferSize);
+            if (buffer == NULL)
+            {
+                printf("Error: memory allocation failed\n");
+                exit(1);
+            }
+            if (fgets(buffer + bufferSize / 2 - 1, bufferSize / 2 + 1, input) == NULL)
+                break;
         }
         char *newBuffer = replaceWordInString(buffer, searchWord, replaceWord);
         if (newBuffer != NULL)
@@ -195,7 +201,7 @@ int main(int argc, char *argv[])
 {
     // Author: MH, MQ
     // 9-1: Poor Usability
-    // The code checks if the correct number of arguments were provided.
+    // This code checks if the correct number of arguments were provided.
     if (argc != 5)
     {
         printf("command takes 4 arguments. [file to search] [word to search for] [word to replace with] [output file]\n");
@@ -210,7 +216,7 @@ int main(int argc, char *argv[])
     // Author: MQ
     // 9-2: Poor Usability
     // 12-1: Failure to Protect Stored Data
-    // The code checks if the output file already exists
+    // This code checks if the output file already exists
     if (fileExists(outputFile))
     {
         char response[4];
@@ -227,7 +233,7 @@ int main(int argc, char *argv[])
 
     // Author: MQ
     // 9-3: Poor Usability
-    // The code checks if the input and output files are .txt files
+    // This code checks if the input and output files are .txt files
     if (!isTxtFile(file) || !isTxtFile(outputFile))
     {
         printf("Error: Only .txt files are supported\n");
@@ -236,7 +242,7 @@ int main(int argc, char *argv[])
 
     // Author: MH
     // 9-4: Poor Usability
-    // The code checks if the search word and replace word are not empty
+    // This code checks if the search word and replace word are not empty
     if (strlen(searchWord) == 0 || strlen(replaceWord) == 0)
     {
         printf("Error: search word and replace word must not be empty\n");
@@ -245,7 +251,7 @@ int main(int argc, char *argv[])
 
     // Author: MQ
     // 9-5: Poor Usability
-    // The code checks if the search word and replace word are the same
+    // This code checks if the search word and replace word are the same
     if (strcmp(searchWord, replaceWord) == 0)
     {
         printf("Error: search word and replace word must not be the same\n");
@@ -254,12 +260,12 @@ int main(int argc, char *argv[])
 
     // Author: MH
     // 2-1: Format String Problems
-    // The code uses a controlled format string to print the search and replace words.
+    // This code uses a controlled format string to print the search and replace words.
     printf("Searching for '%s' and replacing with '%s' in file '%s'\n", searchWord, replaceWord, file);
 
     // Author: MH
     // 6-3: Failure to Handle Errors Correctly
-    // The code checks if the file was opened successfully.
+    // This code checks if the file was opened successfully.
     FILE *fp = fopen(file, "r");
     if (fp == NULL)
     {
@@ -269,7 +275,7 @@ int main(int argc, char *argv[])
 
     // Author: MH
     // 6-4: Failure to Handle Errors Correctly
-    // The code checks if the replace file was created successfully.
+    // This code checks if the replace file was created successfully.
     FILE *temp = fopen(outputFile, "w");
     if (temp == NULL)
     {

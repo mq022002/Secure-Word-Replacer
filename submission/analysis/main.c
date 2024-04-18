@@ -104,11 +104,17 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
     }
     while (fgets(buffer, bufferSize, input) != NULL)
     {
-        if (strlen(buffer) >= bufferSize)
+        while (strchr(buffer, '\n') == NULL)
         {
-            printf("Error: Buffer overflow\n");
-            free(buffer);
-            return;
+            bufferSize *= 2;
+            buffer = realloc(buffer, bufferSize);
+            if (buffer == NULL)
+            {
+                printf("Error: memory allocation failed\n");
+                exit(1);
+            }
+            if (fgets(buffer + bufferSize / 2 - 1, bufferSize / 2 + 1, input) == NULL)
+                break;
         }
         char *newBuffer = replaceWordInString(buffer, searchWord, replaceWord);
         if (newBuffer != NULL)
