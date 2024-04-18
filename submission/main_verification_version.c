@@ -15,6 +15,7 @@
  * @brief This function checks if a file exists.
  * @param filename The name of the file to check.
  * @return 1 if the file exists, 0 otherwise.
+ * @side_effects No side effects.
  */
 int fileExists(const char *filename)
 {
@@ -28,6 +29,7 @@ int fileExists(const char *filename)
  * @param searchWord The word to be replaced.
  * @param replaceWord The word to replace the search word.
  * @return A new string with the word replaced, or NULL if an error occurs.
+ * @side_effects Allocates memory for a new string. The caller is responsible for freeing this memory.
  */
 char *replaceWordInString(const char *str, const char *searchWord, const char *replaceWord)
 {
@@ -109,6 +111,7 @@ char *replaceWordInString(const char *str, const char *searchWord, const char *r
  * @param output The output file pointer.
  * @param searchWord The word to search for in the file.
  * @param replaceWord The word to replace the search word with.
+ * @side_effects Reads from the input file and writes to the output file. Allocates and frees buffer memory.
  */
 void processFile(FILE *input, FILE *output, const char *searchWord, const char *replaceWord)
 {
@@ -151,6 +154,7 @@ void processFile(FILE *input, FILE *output, const char *searchWord, const char *
  * @param argc The number of command line arguments.
  * @param argv The command line arguments.
  * @return 0 if successful, 1 otherwise.
+ * @side_effects Opens and closes files, processes command line arguments, and calls processFile function which has its own side effects.
  */
 int main(int argc, char *argv[])
 {
